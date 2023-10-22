@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NoteMDBackend.Models
 {
-    public class AddNoteViewModel
+    public class EditNoteViewModel
     {
         [Required]
         [MaxLength(50)]

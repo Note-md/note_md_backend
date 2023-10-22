@@ -3,8 +3,10 @@ using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using NoteMDBackend.Entity;
 using NoteMDBackend.Service;
+using OpenAI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,15 @@ builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddScheme<AuthenticationSchemeOptions,
         FirebaseAuthenticationHandler>(JwtBearerDefaults.AuthenticationScheme, null);
+
+Console.WriteLine(Environment.GetEnvironmentVariable("OPEN_API_KEY"));
+
+builder.Services
+    .AddOpenAIService(settings =>
+    {
+        settings.ApiKey = "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";
+    }
+    );
 
 builder.Services.AddAuthorization();
 

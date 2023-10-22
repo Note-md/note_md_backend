@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using NoteMDBackend.Entity;
 using NoteMDBackend.Models;
 using NoteMDBackend.Service;
+using OpenAI.Interfaces;
+using OpenAI.ObjectModels.RequestModels;
 
 namespace NoteMDBackend.Controllers;
 
@@ -13,10 +15,13 @@ public class HomeController : Controller
 
     private readonly ICourseService _courseService;
 
-    public HomeController(ILogger<HomeController> logger, ICourseService courseService)
+    private readonly IOpenAIService _openAiService;
+
+    public HomeController(ILogger<HomeController> logger, ICourseService courseService, IOpenAIService openAIService)
     {
         _logger = logger;
         _courseService = courseService;
+        _openAiService = openAIService;
 
     }
 
@@ -31,6 +36,8 @@ public class HomeController : Controller
         var courses = await _courseService.GetCoursesAsync();
 
         var selectedCourse = courses.FirstOrDefault(c => c.Id == id) ?? courses.FirstOrDefault();
+
+        ViewBag.SelectedCourseId = selectedCourse.Id;
 
         var notes = await _courseService.GetNotesAsync(selectedCourse.Id);
         var viewModel = new HomeViewModel
@@ -51,6 +58,30 @@ public class HomeController : Controller
             Course = course
         };
         return View(addNoteViewModel);
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> TextboxChanged(string textboxValue)
+    {
+        // Your logic here
+        var completionResult = await _openAiService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
+        {
+            Messages = new List<ChatMessage>
+            {
+                ChatMessage.FromSystem("You are a helpful assistant for student who help to genrate content from title. You can genrate anything related to title Directly give output in Markdown"),
+                ChatMessage.FromUser($"The title is {textboxValue}"),
+            },
+            Model = OpenAI.ObjectModels.Models.ChatGpt3_5Turbo,
+            MaxTokens = 50//optional
+        });
+        if (completionResult.Successful)
+        {
+            Console.WriteLine(completionResult.Choices.First().Message.Content);
+            
+            return Json(new { result = completionResult.Choices.First().Message.Content });
+        }
+
+        return Json(new { });
     }
 
     [HttpPost("[controller]/[action]/{id}")]
@@ -74,6 +105,34 @@ public class HomeController : Controller
 
         note.Course = course;
         await _courseService.AddNoteAsync(note);
+        return RedirectToAction("Index");
+    }
+
+    [HttpGet("[controller]/[action]/{id}")]
+    public async Task<IActionResult> Edit(Guid id)
+    {
+        var note = await _courseService.GetNoteByIdAsync(id);
+        var viewModel = new EditNoteViewModel
+        {
+            Course = note.Course,
+            Title = note.Title,
+            Markdown = note.Markdown
+        };
+        return View(viewModel);
+    }
+
+    [HttpPost("[controller]/[action]/{id}")]
+    public async Task<IActionResult> Edit(Guid id, EditNoteViewModel viewModel)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(viewModel);
+        }
+
+        var note = await _courseService.GetNoteByIdAsync(id);
+        note.Title = viewModel.Title;
+        note.Markdown = viewModel.Markdown;
+        await _courseService.EditNoteAsync(note);
         return RedirectToAction("Index");
     }
 

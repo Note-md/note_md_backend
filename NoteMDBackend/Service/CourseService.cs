@@ -17,6 +17,8 @@ namespace NoteMDBackend.Service
 
         Task<Course> GetCourseByIdAsync(int id);
 
+        Task<Note> EditNoteAsync(Note note);
+
     }
     public class CourseService : ICourseService
     {
@@ -62,7 +64,17 @@ namespace NoteMDBackend.Service
 
         public Task<Note> GetNoteByIdAsync(Guid id)
         {
-            return _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+            return _context.Notes
+                .Include(n => n.Course)
+                .Include(n => n.User)
+                .FirstOrDefaultAsync(n => n.Id == id);
+        }
+
+        public async Task<Note> EditNoteAsync(Note note)
+        {
+            _context.Notes.Update(note);
+            await _context.SaveChangesAsync();
+            return note;
         }
 
     }
