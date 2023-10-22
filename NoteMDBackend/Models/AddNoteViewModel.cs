@@ -8,9 +8,11 @@ namespace NoteMDBackend.Models
     {
         [Required]
         [MaxLength(50)]
+        [Display(Name = "Note Heading")]
         public string Title { get; set; }
 
         [Required]
+        [Display(Name = "Note Contents")]
         public string Markdown { get; set; }
 
         [NotMapped]

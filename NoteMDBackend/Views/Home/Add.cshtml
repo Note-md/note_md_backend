@@ -3,65 +3,78 @@
 @{
     ViewData["Title"] = "Add";
 }
-<div class="container">
-    <h1 class="display-4">Add</h1>
-    <span class="lead">Add a new note to the course.</span>
 
-    <h3>@Model.Course.Name</h3>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Add">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Title" class="control-label"></label>
-                    <input asp-for="Title" id="title" class="form-control" />
-                    <span asp-validation-for="Title" class="text-danger"></span>
+<section id="login" style="background-color: #f3ebe3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <form asp-action="Add">
+        <div class="container-fluid vh-100">
+            <div class="row gx-5 mx-5 d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 mt-3 mx-5">
+                    <div class="row">
+                        <div class="col-2 text-center">
+                            <a asp-action="Index" class="nav-link fw-bolder mt-3" style="color: #5464ac;"><i class="fa fa-arrow-left me-3" aria-hidden="true"></i>Back to Board</a>
+                        </div>
+
+                        <div class="col-8 text-center">
+                            <a class="ps-0 ms-0" href="../Pages/board.html">
+                                <img src="~/css/logo2_transparent_cut.png" alt="Our Logo" style="width: 125px; height: 80px;"
+                                     class="img-fluid ms-auto mw-25 mw-sm-50 mw-md-75 mw-lg-100">
+                            </a>
+                        </div>
+                        <div class="col-2 text-center">
+                            <input type="submit" value="Post" class="btn px-4 mt-3" style="background-color: #5464ac; color: #f3ebe3;" />
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Markdown" class="control-label"></label>
-                    <textarea asp-for="Markdown" id="markdown" class="form-control"></textarea>
-                    <span asp-validation-for="Markdown" class="text-danger"></span>
+                <div class="col-sm-12 col-md-10 col-lg-8 col-xl-8">
+                    <p class="h1 fw-bold text-center mt-5 mb-4">Create a new note!</p>
+                    <!-- Heading Input Text Field -->
+                    <div class="form-outline mb-4">
+                        <label asp-for="Title" class="form-label fw-bolder"></label>
+                        <input asp-for="Title" id="title" class="form-control form-control-lg" placeholder="Insert a heading for the new note" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <!-- Text Input Text Field -->
+                    <div class="form-outline mb-4">
+                        <label asp-for="Markdown" class="form-label fw-bolder"></label>
+                        <textarea asp-for="Markdown" id="markdown" class="form-control form-control-lg" placeholder="Insert note contents here." style="height: 30rem;"></textarea>
+                        <span asp-validation-for="Markdown" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+</section>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var titleElement = document.getElementById("title");
-            var markdownElement = document.getElementById("markdown");
 
-            titleElement.addEventListener("change", function () {
-                var textboxValue = titleElement.value;
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var titleElement = document.getElementById("title");
+        var markdownElement = document.getElementById("markdown");
 
-                fetch("/Home/TextboxChanged", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ textboxValue: textboxValue })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        if (data.result != null) {
-                            markdownElement.value = data.result;
-                        }
-                    });
-            });
+        titleElement.addEventListener("change", function () {
+            var textboxValue = titleElement.value;
+
+            fetch("/Home/TextboxChanged", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ textboxValue: textboxValue })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.result != null) {
+                        markdownElement.value = data.result;
+                    }
+                });
         });
+    });
 
-    </script>
+</script>
 
-</div>
 
 @section Scripts {
     @{

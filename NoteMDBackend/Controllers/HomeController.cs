@@ -8,7 +8,10 @@ using OpenAI.ObjectModels.RequestModels;
 
 namespace NoteMDBackend.Controllers;
 
-
+public class TextboxValueModel
+{
+    public string TextboxValue { get; set; }
+}
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -61,18 +64,19 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<JsonResult> TextboxChanged(string textboxValue)
+    public async Task<JsonResult> TextboxChanged([FromBody]TextboxValueModel textboxValue)
     {
         // Your logic here
         var completionResult = await _openAiService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
         {
             Messages = new List<ChatMessage>
             {
-                ChatMessage.FromSystem("You are a helpful assistant for student who help to genrate content from title. You can genrate anything related to title Directly give output in Markdown"),
-                ChatMessage.FromUser($"The title is {textboxValue}"),
+                ChatMessage.FromSystem($"You are a helpful assistant. Format it in markdown to looks good."),
+                ChatMessage.FromUser($"{textboxValue.TextboxValue}")
             },
-            Model = OpenAI.ObjectModels.Models.ChatGpt3_5Turbo,
-            MaxTokens = 50//optional
+            Model = OpenAI.ObjectModels.Models.Gpt_3_5_Turbo_16k,
+            MaxTokens = 50,
+            Stop = "\n"
         });
         if (completionResult.Successful)
         {
