@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace NoteMDBackend.Service;
+namespace NoteMDBackend.Models;
 
 public class RegisterRequest
 {
@@ -22,14 +22,14 @@ public class RegisterRequest
     public string LastName { get; set; }
 
     [Required]
-    [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Invalid Phone Number Format")]
     public string ImageURL { get; set; }
-    
+
     [Required]
-    [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Invalid Phone Number Format")]
     public string Description { get; set; }
 
+    [Required]
     public string ProgramEnrolled { get; set; }
-    
+
+    [Required]
     public string? Designation { get; set; }
 }

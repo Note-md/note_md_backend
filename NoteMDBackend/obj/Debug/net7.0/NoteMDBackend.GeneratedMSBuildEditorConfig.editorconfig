@@ -16,8 +16,12 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\karti\Documents\GitHub\note_md_backend\NoteMDBackend
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/karti/Documents/GitHub/note_md_backend/NoteMDBackend/Pages/Auth/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxSZWdpc3Rlci5jc2h0bWw=
+[C:/Users/karti/Documents/GitHub/note_md_backend/NoteMDBackend/Views/Auth/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/karti/Documents/GitHub/note_md_backend/NoteMDBackend/Views/Auth/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/karti/Documents/GitHub/note_md_backend/NoteMDBackend/Views/Home/Index.cshtml]
