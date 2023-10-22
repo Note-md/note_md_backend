@@ -2,24 +2,67 @@
 @{
 }
 
+<section id="login" style="background-color: #f3ebe3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div class="container-fluid vh-100">
+        <div class="row gx-5 mx-5 d-flex justify-content-center align-items-center h-100">
+            <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 text-center">
+                <img src="~/css/notes.png" class="img-fluid" alt="Notes" style="min-width: 80%;">
+            </div>
+            <div class="col-sm-12 col-md-10 col-lg-6 col-xl-6   ">
+                <form asp-action="Login">
+                    <p class="h1 fw-bold text-center mb-4">Log Into Your Account!</p>
 
-<form asp-action="login" asp-controller="Auth">
-    <div class="col">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="EmailID" class="control-label"></label>
-            <input asp-for="EmailID" class="form-control" />
-            <span asp-validation-for="EmailID" class="text-danger"></span>
-        </div>
+                    <!-- Email Input Text Field -->
+                    <div class="form-outline mb-4">
+                        <label asp-for="EmailID" class="form-label fw-bolder" for="logFormEmail">Email address</label>
+                        <input asp-for="EmailID" type="email" id="logFormEmail" class="form-control form-control-lg" placeholder="Insert a valid email address" />
+                        <span asp-validation-for="EmailID" class="text-danger"></span>
+                    </div>
 
-        <div class="form-group">
-            <label asp-for="Password" class="control-label"></label>
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
+                    <!-- Password input -->
+                    <div class="form-outline mb-3">
+                        <label asp-for="Password" class="form-label fw-bolder" for="logFormPass">Password</label>
+                        <input asp-for="Password" type="password" id="logFormPass" class="form-control form-control-lg" placeholder="Insert your password" />
+                        <span asp-validation-for="Password" class="text-danger"></span> 
+                    </div>
 
-        <div class="form-group">
-            <input type="submit" value="Login" class="btn btn-primary" />
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Remember Me? -->
+                        <div class="form-check mb-0">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="logFormRemember" />
+                            <label class="form-check-label" for="logFormRemember">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <a href="#login" class="text-body">Forgot password?</a>
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" class="btn btn-lg px-4" style="background-color: #5464ac; color: #f3ebe3;">Login</button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a asp-action="Register" class="link" style="color: #5464ac;">Register</a></p>
+                    </div>
+
+                    <div class="divider d-flex align-items-center my-4">
+                        <p class="text-center fw-bold fs-6 mb-0">Or</p>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                        <p class="lead fw-bolder fs-5 mb-0 me-3">Sign in with</p>
+                        <button type="button" class="btn btn-floating mx-1 me-1" style="background-color: #5464ac; color: #f3ebe3;">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-floating mx-1 me-1" style="background-color: #5464ac; color: #f3ebe3;">
+                            <i class="fab fa-google"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-floating mx-1" style="background-color: #5464ac; color: #f3ebe3;">
+                            <i class="fab fa-linkedin-in"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</form>
+</section>
