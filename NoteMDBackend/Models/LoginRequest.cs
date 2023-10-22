@@ -1,4 +1,4 @@
-namespace NoteMDBackend.Service;
+namespace NoteMDBackend.Models;
 
 public class LoginRequest
 {
