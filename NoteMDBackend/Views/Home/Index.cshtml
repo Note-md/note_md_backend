@@ -4,18 +4,56 @@
     ViewData["Title"] = "Home Page";
 }
 
-@Html.Partial("_Sidebar", Model.Courses)
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            @Html.Partial("_Sidebar", Model.Courses)
+        </nav>
 
-
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-
-
-        @foreach (var course in Model.Notes)
-        {
-            <div class="course">
-                <h2>@course.Title</h2>
+        <!-- Main Content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <!--Add new Add button-->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Notes</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group me-2">
+                        <a asp-action="Add" asp-route-id="@Model.SelectedCourseId" class="btn btn-sm btn-outline-secondary">Add</a>
+                    </div>
+                </div>
             </div>
-        }
+
+            <div class="container">
+                <div class="accordion" id="accordionExample">
+                    @foreach (var note in Model.Notes)
+                    {
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#note-@note.Id" aria-expanded="false" aria-controls="note-@note.Id">
+                                    @note.Title
+                                </button>
+                            </h2>
+                            <div id="note-@note.Id" class="accordion-collapse collapse" aria-labelledby="heading-@note.Id" data-bs-parent="#accordionExample">
+
+                                <!--Add Edit button and user name course name-->
+                                <div class="px-3 pt-2 d-flex justify-content-between">
+                                    <div class="d-flex">
+                                        <p class="m-2 ">User: @note.User.FirstName @note.User.LastName</p>
+                                        <p class="m-2 text-muted">Course: @note.User.CreatedAt</p>
+                                    </div>
+                                    <div>
+                                    <a asp-action="Edit" asp-route-id="@note.Id" class="btn btn-sm btn-primary">Edit</a>
+                                </div>
+                                </div>
+
+                                <div class="accordion-body p-4 bg-light rounded m-4">
+                                    @Html.Raw(@note.FormattedMarkdown)
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </main>
     </div>
-</main>
+</div>

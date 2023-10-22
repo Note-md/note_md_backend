@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using NoteMDBackend.Entity;
 using NoteMDBackend.Models;
 using NoteMDBackend.Service;
 
@@ -18,7 +19,7 @@ public class HomeController : Controller
         _courseService = courseService;
 
     }
-    
+
     public async Task<ActionResult> Sidebar()
     {
         var courses = await _courseService.GetCoursesAsync();
@@ -39,6 +40,41 @@ public class HomeController : Controller
             SelectedCourseId = selectedCourse.Id
         };
         return View(viewModel);
+    }
+
+    [HttpGet("[controller]/[action]/{id}")]
+    public async Task<IActionResult> Add(int id)
+    {
+        var course = await _courseService.GetCourseByIdAsync(id);
+        var addNoteViewModel = new AddNoteViewModel
+        {
+            Course = course
+        };
+        return View(addNoteViewModel);
+    }
+
+    [HttpPost("[controller]/[action]/{id}")]
+    public async Task<IActionResult> Add(int id, AddNoteViewModel viewModel)
+    {
+
+        if (!ModelState.IsValid)
+        {
+            return View(viewModel);
+        }
+
+        var course = await _courseService.GetCourseByIdAsync(id);
+
+        var note = new Note
+        {
+            Title = viewModel.Title,
+            Markdown = viewModel.Markdown,
+            CreatedBy = "1",
+            CourseId = course.Id
+        };
+
+        note.Course = course;
+        await _courseService.AddNoteAsync(note);
+        return RedirectToAction("Index");
     }
 
     public IActionResult Privacy()

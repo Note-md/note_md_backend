@@ -12,7 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 
-
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -28,7 +27,10 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
-// Session is not enabled by default and must be configured
+// Add lagacy timestap for npgsql
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+
 
 
 builder.Services.AddSession(options =>
