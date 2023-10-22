@@ -18,15 +18,27 @@ public class HomeController : Controller
         _courseService = courseService;
 
     }
-
-
-    public async Task<IActionResult> Index()
+    
+    public async Task<ActionResult> Sidebar()
     {
-        var homeViewModel = new HomeViewModel();
+        var courses = await _courseService.GetCoursesAsync();
+        return PartialView("_Sidebar", courses);
+    }
 
-        homeViewModel.courses = await _courseService.GetCoursesAsync();
+    public async Task<IActionResult> Index(int? id)
+    {
+        var courses = await _courseService.GetCoursesAsync();
 
-        return View(homeViewModel);
+        var selectedCourse = courses.FirstOrDefault(c => c.Id == id) ?? courses.FirstOrDefault();
+
+        var notes = await _courseService.GetNotesAsync(selectedCourse.Id);
+        var viewModel = new HomeViewModel
+        {
+            Courses = courses,
+            Notes = notes,
+            SelectedCourseId = selectedCourse.Id
+        };
+        return View(viewModel);
     }
 
     public IActionResult Privacy()
