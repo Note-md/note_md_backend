@@ -1,8 +1,78 @@
-﻿@{
+﻿@model HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@*
+
+public class Course
+{
+    [Key] public int Id { get; set; }
+
+    [Required] [MaxLength(50)] public string Name { get; set; }
+
+    [Required] [MaxLength(50)] public string Code { get; set; }
+
+    [Required] public string Description { get; set; }
+
+    [Required] [ForeignKey(nameof(User))] public string CreatedBy { get; set; }
+
+    public DateTimeOffset CreatedAt { get; set; } = DateTime.Now;
+
+    public string Status { get; set; } = "Active";
+
+    public User User { get; set; }
+}
+*@
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Code
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Created By
+            </th>
+            <th>
+                Created At
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model.courses)
+        {
+            <tr>
+                <td>
+                    @course.Name
+                </td>
+                <td>
+                    @course.Code
+                </td>
+                <td>
+                    @course.Description
+                </td>
+                <td>
+                    @course.CreatedBy
+                </td>
+                <td>
+                    @course.CreatedAt
+                </td>
+                <td>
+                    @course.Status
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

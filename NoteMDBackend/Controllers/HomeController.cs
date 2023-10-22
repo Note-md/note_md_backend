@@ -1,21 +1,32 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using NoteMDBackend.Models;
+using NoteMDBackend.Service;
 
 namespace NoteMDBackend.Controllers;
+
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    private readonly ICourseService _courseService;
+
+    public HomeController(ILogger<HomeController> logger, ICourseService courseService)
     {
         _logger = logger;
+        _courseService = courseService;
+
     }
 
-    public IActionResult Index()
+
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var homeViewModel = new HomeViewModel();
+
+        homeViewModel.courses = await _courseService.GetCoursesAsync();
+
+        return View(homeViewModel);
     }
 
     public IActionResult Privacy()

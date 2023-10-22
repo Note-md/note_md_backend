@@ -39,6 +39,7 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 
 
 var app = builder.Build();
