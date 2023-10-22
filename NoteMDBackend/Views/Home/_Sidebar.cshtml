@@ -10,7 +10,7 @@
             var isActive = course.Id == ViewBag.SelectedCourseId ? "active" : "";
 
             <li class="nav-item">
-                <a class="btn btn-outline-secondary border-0 text-white d-flex @isActive" asp-route-id="@course.Id" asp-action="Index" asp-controller="Home">
+                <a class="btn btn-outline-secondary border-0 d-flex @isActive" asp-route-id="@course.Id" asp-action="Index" asp-controller="Home" style="background-color: #f3ebe3; color: #5464ac;">
                     <span data-feather="home"></span>
                     @course.Name
                 </a>

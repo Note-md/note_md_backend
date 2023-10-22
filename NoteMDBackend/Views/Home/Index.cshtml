@@ -5,9 +5,9 @@
 }
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" style="background-color: #f3ebe3">
         <!-- Sidebar -->
-        <nav id="sidebar" class="text-light  col-md-3 col-lg-2 d-md-block bg-dark sidebar">
+        <nav id="sidebar" class="text-light  col-md-3 col-lg-2 d-md-block sidebar" style="color: #f3ebe3; background-color: #5464ac">
             @Html.Partial("_Sidebar", Model.Courses)
         </nav>
 
@@ -17,7 +17,7 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 px-4 mb-3">
                 <h1 class="display-4">Notes</h1>
                 <div class="btn-group me-2">
-                    <a asp-action="Add" asp-route-id="@Model.SelectedCourseId" class="btn btn-secondary">Add</a>
+                    <a asp-action="Add" asp-route-id="@Model.SelectedCourseId" class="btn" style="background-color:#5464ac; color: #f3ebe3;">Add</a>
                 </div>
             </div>
 
