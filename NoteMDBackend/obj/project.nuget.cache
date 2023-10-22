@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "icn814tlNQSiThUHO/IFnWuMuYexsFUVIiQq4ObnT3IM5vIN7NjBgAqNXTB+aJv0Bg0Own5EtAw2z9qhu3dFlw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\karti\\RiderProjects\\NoteMD\\NoteMDBackend\\NoteMDBackend.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\karti\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
+    "C:\\Users\\karti\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
